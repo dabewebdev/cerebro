@@ -9,7 +9,7 @@
 const SUPABASE_URL = "https://juhrigftrfukxyboiigb.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_z6YA5Mo66F3vEu7CekvYNw_Dou6pGeR";
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Auth UI
 const elEmail = document.getElementById("email");
@@ -18,7 +18,7 @@ const btnSignOut = document.getElementById("btnSignOut");
 const authStatus = document.getElementById("authStatus");
 
 async function refreshAuthUI() {
-  const { data } = await supabase.auth.getSession();
+  const { data } = await supabaseClient.auth.getSession();
   const session = data.session;
 
   if (session?.user) {
@@ -38,7 +38,7 @@ btnSignIn?.addEventListener("click", async () => {
   const email = elEmail.value.trim();
   if (!email) return alert("Enter your email first.");
 
-  const { error } = await supabase.auth.signInWithOtp({
+  const { error } = await supabaseClient.auth.signInWithOtp({
     email,
     options: {
       // IMPORTANT: set this to your deployed Vercel URL
@@ -55,7 +55,7 @@ btnSignOut?.addEventListener("click", async () => {
   await refreshAuthUI();
 });
 
-supabase.auth.onAuthStateChange(() => {
+supabaseClient.auth.onAuthStateChange(() => {
   refreshAuthUI();
 });
 
