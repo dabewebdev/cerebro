@@ -94,3 +94,26 @@ button:hover { border-color: #3c5475; }
     border-radius: 12px;
     background: #0b111a;
 }
+
+/* Auth button states */
+#btnSignIn {
+  transition: all 0.2s ease;
+}
+
+#btnSignIn.sending {
+  background-color: #555;
+  border-color: #777;
+  color: white;
+}
+
+#btnSignIn.success {
+  background-color: #1f7a3a;
+  border-color: #2ecc71;
+  color: white;
+}
+
+#btnSignIn.error {
+  background-color: #7a1f1f;
+  border-color: #e74c3c;
+  color: white;
+}

@@ -38,19 +38,38 @@ btnSignIn?.addEventListener("click", async () => {
   const email = elEmail.value.trim();
   if (!email) return alert("Enter your email first.");
 
+  btnSignIn.classList.remove("success", "error");
+  btnSignIn.classList.add("sending");
+  btnSignIn.disabled = true;
+  btnSignIn.textContent = "Sending...";
+
   const { error } = await supabaseClient.auth.signInWithOtp({
     email,
     options: {
-      // IMPORTANT: set this to your deployed Vercel URL
       emailRedirectTo: window.location.origin
     }
   });
 
-  if (error) return alert(error.message);
-  alert("Check your email for the login link.");
+  btnSignIn.classList.remove("sending");
+  btnSignIn.disabled = false;
+
+  if (error) {
+    btnSignIn.classList.add("error");
+    btnSignIn.textContent = "Failed";
+    console.error(error);
+    return;
+  }
+
+  btnSignIn.classList.add("success");
+  btnSignIn.textContent = "Link Sent ✓";
 });
 
-btnSignOut?.addEventListener("click", async () => {
+
+
+
+
+
+  btnSignOut?.addEventListener("click", async () => {
   await supabase.auth.signOut();
   await refreshAuthUI();
 });
