@@ -9,7 +9,7 @@
 const SUPABASE_URL = "https://juhrigftrfukxyboiigb.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_z6YA5Mo66F3vEu7CekvYNw_Dou6pGeR";
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabase2 = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Auth UI
 const elEmail = document.getElementById("email");
