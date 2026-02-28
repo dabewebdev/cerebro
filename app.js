@@ -42,7 +42,7 @@ btnSignIn?.addEventListener("click", async () => {
     email,
     options: {
       // IMPORTANT: set this to your deployed Vercel URL
-      emailRedirectTo: "https://cerebro-nine-pearl.vercel.app"
+      emailRedirectTo: window.location.origin
     }
   });
 
