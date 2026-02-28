@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerebro Journal (Private)</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header class="header">
+        <h1>Cerebro Journal</h1>
+        <p class="sub">Private experience tracker &#8226; stored locally in your browser</p>
+    </header>
+    
+    <main class="grid">
+        <!-- Add event -->
+        <section class="card">
+            <h2>Add Event</h2>
+
+            <form id="eventForm" autocomplete="off">
+                <div class="row">
+                    <label>
+                        Date & time 
+                        <input id="dt" type="datetime-local" required />
+                    </label>
+
+                    <label>
+                        Type 
+                        <select id="type" required>
+                            <option value="" disabled selected>Select...</option> 
+                            <option>Dream (vivid)</option>
+                            <option>Out-of-body</option>
+                            <option>Presence sensed</option>
+                            <option>Vision / imagery</option>
+                            <option>Voice / message</option>
+                            <option>Smell (unexplained)</option>
+                            <option>Physical sensation</option>
+                            <option>Synchronicity</option>
+                            <option>Other</option>
+                        </select>
+                    </label>
+                </div>
+
+                    <div class="row">
+                        <label>
+                            Intensity (1-10)
+                            <input id="intensity" type="number" min="1" max="10" value="5" required />
+                        </label>
+                        <label>
+                            Emotion (optional)
+                            <select id="emotion">
+                                <option value="">-</option>
+                                <option>Peace</option>
+                                <option>Awe</option>
+                                <option>Joy</option>
+                                <option>Fear</option>
+                                <option>Anxiety</option>
+                                <option>Confusion</option>
+                                <option>Sadness</option>
+                                <option>Anger</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="row">
+                        <label>
+                            Sleep quality (0-10, optional)
+                            <input id="sleep" type="number" min="0" max="10" placeholder="e.g., 7" />
+                        </label>
+                        
+                        <label>
+                            Stress level (0-10, optional)
+                            <input id="stress" type="number" min="0" max="10" placeholder="e.g., 3" />
+                        </label>
+
+                        <label>
+                            Prayer / meditation state (optional)
+                            <input id="state" type="text" placeholder="e.g., prayed before sleep; worship music; fasting" />
+                        </label>
+
+                        <label>
+                            Notes
+                            <textarea id="notes" rows="4" placeholder="Write what happened... (keep it honest + specific)"></textarea>
+                        </label>
+
+                        <label class="inline">
+                            <input id="locEnabled" type="checkbox" />
+                            Save location (optional: uses coarse geolocation if you allow it)
+                        </label>
+
+                        <div class="actions">
+                            <button type="submit">Save Event</button>
+                            <button type="button" id="clearForm" class="secondary">Clear</button>
+                        </div>
+                    </form>
+
+                    <p class="tiny">
+                        Tip: Keep descriptions factual (what you perceived + context) and avoid conclusions. You can interpret later.
+                    </p> 
+                </section>
+
+                <!-- Browse + Filter-->
+                 <section class="card">
+                    <h2>Browse</h2>
+
+                    <div class="row">
+                        <label>
+                            Search 
+                            <input id="q" type="search" placeholder="type, notes, tags..." />
+                        </label>
+
+                        <label>
+                            Type filter 
+                            <select id="typeFilter">
+                                <option value="">All</option>
+                                <option>Dream (vivid)</option>
+                                <option>Out-of-body</option>
+                                <option>Presence sensed</option>
+                                <option>Vision / imagery</option>
+                                <option>Voice / message</option>
+                                <option>Smell (unexplained)</option>
+                                <option>Physical sensation</option>
+                                <option>Synchronicity</option>
+                                <option>Other</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="row">
+                        <label>
+                            Min intensity<input id="minIntensity" type="number" min="1" max="10" placeholder="1" />
+                        </label>
+
+                        <label>
+                            Date range
+                            <div class="row tight">
+                                <input id="from" type="date" />
+                                <input id="to" type="date" />
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" id="refresh" class="secondary">Refresh</button>
+                        <button type="button" id="exportJson" class="secondary">Export JSON</button>
+                        <button type="button" id="exportCsv" class="secondary">Export CSV</button>
+                    </div>
+
+                    <div d="list" class="list"></div>
+                 </section>
+
+                 <!-- Insights -->
+                  <section class="card">
+                    <h2>Insights</h2>
+                    <div class="insights">
+                        <div class="metric">
+                            <div class="label">Total events</div>
+                            <div class="value" id="mTotal">0</div>
+                        </div>
+                    <div class="metric">
+                        <div class="label">Last 7 days</div>
+                        <div class="value" id="m7">0</div>
+                    </div>
+                    <div class="metric">
+                        <div class="label">Avg intensity</div>
+                        <div class="value" id="mAvg">0</div>
+                    </div>    
+                </div>
+
+                <h3 class="h3">Recent</h3>
+                <div id="recent" class="kv"></div>
+
+                <p class="tiny">
+                    These are descriptive stats only. They do not prove causes-just patterns in your logs.
+                </p>
+            </section>
+        </main>
+
+        <footer class="footer tiny">
+            Stored locally (IndexedDB). No account. No cloud.
+        </footer>
+
+        <script src="app.js"></script>
+    </body>
+    </html>
+                            
+                    
+                    
+
+                        
+
+
+                
