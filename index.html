@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cerebro Journal (Private)</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <header class="header">
         <h1>Cerebro Journal</h1>
+        <div class="auth-bar">
+  <input id="email" type="email" placeholder="email for sign-in link" />
+  <button id="btnSignIn">Send Login Link</button>
+  <button id="btnSignOut" style="display:none;">Sign Out</button>
+  <span id="authStatus"></span>
+</div>
         <p class="sub">Private experience tracker &#8226; stored locally in your browser</p>
     </header>
     

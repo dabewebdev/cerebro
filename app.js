@@ -1,6 +1,68 @@
 // Cerebro Journal — Phase 1
 // Local-only, IndexedDB storage. No external network calls.
 
+// --- Supabase setup (uses Vercel env vars during build) ---
+// For static sites on Vercel, env vars are not automatically injected into plain JS.
+// So we need to hardcode them OR use a small /config endpoint.
+// Easiest for now: paste them directly here (publishable key only).
+
+const SUPABASE_URL = "https://juhrigftrfukxyboiigb.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_z6YA5Mo66F3vEu7CekvYNw_Dou6pGeR";
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Auth UI
+const elEmail = document.getElementById("email");
+const btnSignIn = document.getElementById("btnSignIn");
+const btnSignOut = document.getElementById("btnSignOut");
+const authStatus = document.getElementById("authStatus");
+
+async function refreshAuthUI() {
+  const { data } = await supabase.auth.getSession();
+  const session = data.session;
+
+  if (session?.user) {
+    authStatus.textContent = `Signed in`;
+    btnSignOut.style.display = "";
+    btnSignIn.style.display = "none";
+    elEmail.style.display = "none";
+  } else {
+    authStatus.textContent = `Not signed in`;
+    btnSignOut.style.display = "none";
+    btnSignIn.style.display = "";
+    elEmail.style.display = "";
+  }
+}
+
+btnSignIn?.addEventListener("click", async () => {
+  const email = elEmail.value.trim();
+  if (!email) return alert("Enter your email first.");
+
+  const { error } = await supabase.auth.signInWithOtp({
+    email,
+    options: {
+      // IMPORTANT: set this to your deployed Vercel URL
+      emailRedirectTo: "https://cerebro-nine-pearl.vercel.app"
+    }
+  });
+
+  if (error) return alert(error.message);
+  alert("Check your email for the login link.");
+});
+
+btnSignOut?.addEventListener("click", async () => {
+  await supabase.auth.signOut();
+  await refreshAuthUI();
+});
+
+supabase.auth.onAuthStateChange(() => {
+  refreshAuthUI();
+});
+
+refreshAuthUI();
+
+
+
 const DB_NAME = "cerebro_journal_db";
 const DB_VERSION = 1;
 const STORE = "events";
